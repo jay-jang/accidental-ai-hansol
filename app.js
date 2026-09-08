@@ -89,7 +89,16 @@ const openingAgenda=openingSlide.body.slice(agendaAt);
 openingSlide.body=`<div class="join-layout"><div>${openingQuestion}</div><figure class="join-qr"><h3>내 휴대폰으로 실험하기</h3><a href="${publicLectureUrl}" target="_blank" rel="noopener noreferrer" aria-label="어쩌다 AI 강의 페이지 열기"><img src="assets/github-pages-qr.png" width="656" height="656" alt="GitHub Pages 강의 페이지 접속 QR 코드"></a><figcaption>카메라로 QR 코드를 비춰주세요.<br><a class="join-url" href="${publicLectureUrl}" target="_blank" rel="noopener noreferrer">jay-jang.github.io/<wbr>accidental-ai-hansol/</a></figcaption><a class="qr-download" href="assets/github-pages-qr.png" download="hansol-ai-lecture-qr.png">QR 이미지 저장 ↓</a></figure></div>${openingAgenda}`;
 openingSlide.note='배정 2분. 먼저 QR 코드를 비춰 각자 강의 페이지를 열게 하세요. 로그인이 필요하지 않습니다. 접속 후 현재의 진로 생각을 하나 골라보게 합니다. 선택은 각자의 화면에서만 바뀌며 학급 응답을 수집하지 않습니다.';
 sections.find(s=>s.id==='sources').body+=`<div class="source">야놀자 주황색 로고 원본: <a href="https://www.yanoljagroup.com/en/press_release/view?id=1534" target="_blank" rel="noopener noreferrer">야놀자 공식 보도자료 · 2026년 3월</a></div>`;
-$('#main').innerHTML=sections.map((s,i)=>`<section id="${s.id}"><div class="slide-content">${i?`<div class="eyebrow">${s.kicker}<span>${s.time}</span></div>`:''}${s.title?`<h2>${s.title}</h2>`:''}${s.body}</div><aside class="note"><strong>진행 노트 · ${s.time}</strong><br>${s.note}</aside></section>`).join('');
+const researchPhotos=[
+  {id:'winter',file:'deep-blue-museum.jpg',alt:'컴퓨터 역사박물관에 전시된 딥 블루와 같은 계열의 IBM 컴퓨터',caption:'딥 블루와 같은 계열의 IBM 컴퓨터 · 박물관 전시',credit:'James the photographer / CC BY 2.0',url:'https://commons.wikimedia.org/wiki/File:Deep_Blue.jpg'},
+  {id:'reinforcement',file:'alphago-match.jpg',alt:'바둑판을 바라보며 생각하는 이세돌',caption:'2016 · AlphaGo와 대국 중인 이세돌',credit:'Google DeepMind',url:'https://deepmind.google/research/alphago/'}
+];
+for(const photo of researchPhotos){
+  const slide=sections.find(s=>s.id===photo.id);
+  const figure=`<figure class="research-photo"><a href="${photo.url}" target="_blank" rel="noopener noreferrer"><img src="assets/research/${photo.file}" alt="${photo.alt}" loading="lazy"></a><figcaption>${photo.caption} · <a href="${photo.url}" target="_blank" rel="noopener noreferrer">사진: ${photo.credit} ↗</a></figcaption></figure>`;
+  slide.body=slide.body.replace('<div class="split"><div>','<div class="split"><div>'+figure);
+}
+$('#main').innerHTML=sections.map((s,i)=>`<section id="${s.id}" class="${researchPhotos.some(p=>p.id===s.id)?'has-research-photo':''}"><div class="slide-content">${i?`<div class="eyebrow">${s.kicker}<span>${s.time}</span></div>`:''}${s.title?`<h2>${s.title}</h2>`:''}${s.body}</div><aside class="note"><strong>진행 노트 · ${s.time}</strong><br>${s.note}</aside></section>`).join('');
 let current=0;const go=n=>{current=Math.max(0,Math.min(sections.length-1,n));$('#'+sections[current].id).scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});};
 $('#prev').onclick=()=>go(current-1);$('#next').onclick=()=>go(current+1);
 window.addEventListener('keydown',e=>{if(/INPUT|TEXTAREA|SELECT|BUTTON/.test(e.target.tagName)||e.altKey||e.ctrlKey||e.metaKey)return;if(['ArrowDown','PageDown','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();go(current+(['ArrowDown','PageDown'].includes(e.key)?1:-1));}});
