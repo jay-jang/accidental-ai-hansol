@@ -4,3 +4,68 @@
 .panel{box-shadow:0 12px 45px #25435a07}.scene img{box-shadow:0 14px 40px #19384a12}.chapter-art{margin:24px 0 0}.chapter-art img{width:100%;height:clamp(180px,25vh,300px);object-fit:cover;display:block;border-radius:14px}.chapter-art figcaption{font-size:12px;color:var(--muted);margin-top:8px}.skip{color:var(--fg)}input::placeholder,textarea::placeholder{color:#657987}#intro{background:radial-gradient(ellipse at 80% 40%,#c6e5f375,transparent 55%)}
 .school-mark{display:flex;align-items:center;gap:15px;margin:0 0 30px}.school-mark img{width:64px;height:64px;object-fit:contain;border-radius:50%;background:white}.school-mark strong{display:block;font-size:20px;letter-spacing:.02em;font-weight:500}.school-mark span{display:block;color:var(--muted);font-size:12px;margin-top:3px}#closing .school-mark{margin:20px 0 0}#intro .eyebrow{margin-bottom:18px}.company-mark{height:112px;background:#fff;border-radius:12px;border:1px solid #18384c12;display:flex;align-items:center;justify-content:center;overflow:hidden;margin:0 0 22px;position:relative}.company-mark img{display:block;object-fit:contain;width:100%;height:auto}.company-mark.nexon img{position:absolute;width:190%;max-width:none;flex-shrink:0}.company-mark.google img{width:70%;max-width:150px}.company-mark.moloco img{width:112%;max-width:none;flex-shrink:0}.company-mark.yanolja img{width:105%;max-width:none;flex-shrink:0}.logo-sources{margin-top:25px;padding-top:20px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:12px 20px}.logo-sources p{width:100%;margin:0}.logo-sources a{font-size:13px;color:var(--muted)}@media(max-width:800px){.school-mark img{width:52px;height:52px}.school-mark strong{font-size:18px}.company-mark{height:95px}}@media print{.company-mark{break-inside:avoid}}
 .company-mark.yanolja img{width:145%}.join-layout{display:grid;grid-template-columns:1fr minmax(280px,350px);align-items:center;gap:5vw}.join-qr{margin:0;text-align:center;background:white;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 12px 40px #25435a08}.join-qr h3{font-size:20px;margin-bottom:12px}.join-qr img{display:block;width:100%;max-width:300px;height:auto;margin:0 auto;image-rendering:pixelated}.join-qr figcaption{font-size:15px;color:var(--muted);line-height:1.7;margin-top:12px}.join-url{font-size:14px;color:var(--a);overflow-wrap:anywhere}.qr-download{display:inline-block;margin-top:12px;font-size:13px;color:var(--muted)}#opening .agenda{margin-top:28px}@media(max-width:800px){.join-layout{grid-template-columns:1fr;gap:28px}.join-qr{width:100%;max-width:350px;justify-self:center;order:-1}}
+
+/* Classroom typography: spend the screen on content, not oversized spacing. */
+html{scroll-padding-top:0}
+body{font-size:1.375rem;line-height:1.5}
+h3{font-size:1.65rem;margin-bottom:14px}
+p{margin-bottom:16px}
+.lead{font-size:clamp(1.5rem,2vw,1.875rem);line-height:1.5;max-width:1000px}
+.small,label,.bar,.task select,.example-grid small,.xor-point span,.rank-item small{font-size:1.125rem}
+input[type=text],textarea,select{font-size:1.25rem;padding:10px}
+button{font-size:1.125rem;padding:9px 16px}
+.eyebrow,.lab-label,.pill,.source,.scene figcaption,.chapter-art figcaption,.school-mark span,.hero-bottom,.logo-sources a{font-size:.9375rem}
+nav{font-size:1rem;gap:20px}header button{font-size:.9375rem}.brand span{font-size:.875rem}
+footer{font-size:.9375rem}footer button{font-size:1rem}
+.timeline p,.sources a,.agenda div{font-size:1.125rem}
+.timeline strong,.agenda b{font-size:1.625rem}
+.sources p{font-size:1rem}
+.join-qr h3{font-size:1.375rem}.join-qr figcaption{font-size:1.125rem}.join-url,.qr-download{font-size:1rem}
+.slide-content{width:100%;min-width:0;display:flow-root}
+.split>*{min-width:0}
+@media screen and (min-width:1100px) and (min-height:650px){
+  section{padding:96px 5vw 70px;min-height:100svh}
+  .slide-content{max-width:1500px;margin:0 auto}
+  h1{font-size:clamp(100px,10vw,160px);margin-bottom:18px}
+  h2{font-size:clamp(2.5rem,3.5vw,3.625rem);margin-bottom:20px;line-height:1.18}
+  .subtitle{font-size:clamp(1.875rem,2.6vw,2.5rem);line-height:1.35;margin-bottom:18px}
+  .eyebrow{margin-bottom:14px}.split{gap:3.5vw}
+  .panel{padding:20px 24px}.lab-label{margin-bottom:10px}.stack{gap:12px}
+  .output{font-size:1.5rem;padding:12px 0;min-height:55px}
+  input[type=range]{margin:10px 0 14px}textarea{min-height:76px}
+  .timeline{gap:22px;margin:16px 0}.timeline article{padding-top:12px}.timeline strong{margin-bottom:8px}
+  .company-mark{height:86px;margin-bottom:14px}
+  .agenda,#opening .agenda{margin-top:18px;gap:18px}.agenda div{padding-top:9px}
+  .scene{margin-bottom:14px}.scene img{height:clamp(190px,28vh,330px)}
+  .chapter-art{margin-top:16px}.chapter-art img{height:clamp(120px,18vh,210px)}
+  .example-grid{gap:20px}.example-grid article{padding-top:12px}.example-number{margin-bottom:8px}
+  .source{margin-top:12px}.logo-sources{margin-top:12px;padding-top:10px;gap:6px 16px}
+  .sources{gap:8px 32px}.sources p{margin:3px 0 8px}
+  .school-mark{margin-bottom:18px}.school-mark img{width:52px;height:52px}
+  .hero-bottom{margin-top:22px}
+  .join-layout{grid-template-columns:1fr 280px;gap:3vw}.join-qr{padding:14px}.join-qr img{max-width:230px}
+  .join-qr h3{margin-bottom:6px}.join-qr figcaption{margin-top:6px;line-height:1.4}.qr-download{margin-top:6px}
+  .quote{font-size:clamp(2rem,3.2vw,3.25rem);line-height:1.4}
+  .gridbox{max-width:240px}.tokens{margin:14px 0;gap:8px}
+  .xor-board{margin:14px 0}.xor-point{padding:12px;gap:6px}
+  .tasks{gap:10px;margin-top:12px}.task{gap:16px;padding-bottom:8px}
+  .rank-item{padding:9px 0}.case-stage{margin-top:18px;padding-top:16px}
+  .statement{padding:12px 0;font-size:1.375rem}
+  #prompt .panel label{margin:10px 0}
+  .show-notes .note{position:absolute;z-index:10;left:5vw;right:5vw;bottom:66px;max-width:none;max-height:40vh;overflow:auto;box-shadow:0 8px 40px #182b3b25;font-size:1.125rem}
+}
+@media screen and (max-width:1099px){
+  body{font-size:1.25rem}
+  section{padding:104px max(5vw,22px) 80px}
+  .split,.join-layout{grid-template-columns:1fr;gap:24px}
+  .timeline,.example-grid{grid-template-columns:1fr 1fr}
+  nav,.brand span{display:none}header button:first-of-type{margin-left:auto}
+  .lead{font-size:1.5rem}.join-qr{max-width:350px;justify-self:center}
+}
+@media screen and (max-width:480px){
+  .timeline,.example-grid{grid-template-columns:1fr}
+  header{gap:8px;padding:0 16px}header button{padding:7px 9px}
+  .agenda{gap:14px}.agenda div{font-size:1rem}
+  h1{font-size:5.5rem}.school-mark strong{font-size:1.25rem}
+}
+@media print{.slide-content{zoom:1!important}section{min-height:0}.note{position:static!important;max-height:none!important}.show-notes .note{font-size:1rem}}

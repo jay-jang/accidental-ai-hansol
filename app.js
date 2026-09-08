@@ -89,7 +89,7 @@ const openingAgenda=openingSlide.body.slice(agendaAt);
 openingSlide.body=`<div class="join-layout"><div>${openingQuestion}</div><figure class="join-qr"><h3>내 휴대폰으로 실험하기</h3><a href="${publicLectureUrl}" target="_blank" rel="noopener noreferrer" aria-label="어쩌다 AI 강의 페이지 열기"><img src="assets/github-pages-qr.png" width="656" height="656" alt="GitHub Pages 강의 페이지 접속 QR 코드"></a><figcaption>카메라로 QR 코드를 비춰주세요.<br><a class="join-url" href="${publicLectureUrl}" target="_blank" rel="noopener noreferrer">jay-jang.github.io/<wbr>accidental-ai-hansol/</a></figcaption><a class="qr-download" href="assets/github-pages-qr.png" download="hansol-ai-lecture-qr.png">QR 이미지 저장 ↓</a></figure></div>${openingAgenda}`;
 openingSlide.note='배정 2분. 먼저 QR 코드를 비춰 각자 강의 페이지를 열게 하세요. 로그인이 필요하지 않습니다. 접속 후 현재의 진로 생각을 하나 골라보게 합니다. 선택은 각자의 화면에서만 바뀌며 학급 응답을 수집하지 않습니다.';
 sections.find(s=>s.id==='sources').body+=`<div class="source">야놀자 주황색 로고 원본: <a href="https://www.yanoljagroup.com/en/press_release/view?id=1534" target="_blank" rel="noopener noreferrer">야놀자 공식 보도자료 · 2026년 3월</a></div>`;
-$('#main').innerHTML=sections.map((s,i)=>`<section id="${s.id}">${i?`<div class="eyebrow">${s.kicker}<span>${s.time}</span></div>`:''}${s.title?`<h2>${s.title}</h2>`:''}${s.body}<aside class="note"><strong>진행 노트 · ${s.time}</strong><br>${s.note}</aside></section>`).join('');
+$('#main').innerHTML=sections.map((s,i)=>`<section id="${s.id}"><div class="slide-content">${i?`<div class="eyebrow">${s.kicker}<span>${s.time}</span></div>`:''}${s.title?`<h2>${s.title}</h2>`:''}${s.body}</div><aside class="note"><strong>진행 노트 · ${s.time}</strong><br>${s.note}</aside></section>`).join('');
 let current=0;const go=n=>{current=Math.max(0,Math.min(sections.length-1,n));$('#'+sections[current].id).scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});};
 $('#prev').onclick=()=>go(current-1);$('#next').onclick=()=>go(current+1);
 window.addEventListener('keydown',e=>{if(/INPUT|TEXTAREA|SELECT|BUTTON/.test(e.target.tagName)||e.altKey||e.ctrlKey||e.metaKey)return;if(['ArrowDown','PageDown','ArrowUp','PageUp'].includes(e.key)){e.preventDefault();go(current+(['ArrowDown','PageDown'].includes(e.key)?1:-1));}});
@@ -127,3 +127,28 @@ function noise(){const n=+$('#noise-level').value/100;$('#noise-out').textConten
 $$('.prompt-part').forEach(b=>b.onchange=()=>{const parts=$$('.prompt-part').filter(b=>b.checked).map(b=>b.value);$('#prompt-result').textContent=parts.length?'과적합에 대한 발표를 만들어줘. '+parts.join(' '):'발표 만들어줘.';});
 $('#rag-ask').onclick=()=>{const k=$('#rag-doc').value;$('#rag-result').textContent=k==='none'?'참고 문서가 없어 일정을 확인할 수 없습니다. 공지 원문이 필요합니다.':k==='old'?'지난 공지에 따르면 월요일 16시입니다. [근거: 지난 공지] 이 문서가 최신인지는 확인하지 못했습니다.':'수정 공지에 따르면 화요일 17시입니다. [근거: 수정 공지] 이전의 월요일 16시 일정이 변경됐습니다.';};$('#rag-doc').onchange=()=>{$('#rag-result').textContent='문서가 바뀌었습니다. 근거와 답을 다시 확인하세요.';};
 const schoolCases={assignment:['AI가 수행평가 초안을 써줬다. 그대로 제출해도 될까?','학교와 과제의 허용 범위를 확인합니다. 내가 이해한 내용을 내 말로 쓰고, AI 도움의 범위를 밝힙니다.'],photo:['재미있는 이미지를 만들려고 친구 사진을 업로드하려 한다.','사진 속 사람의 동의를 먼저 구합니다. 어디로 전송되고 어떻게 쓰이는지 모른다면, 가상의 인물로 바꿔볼 수 있습니다.'],source:['AI가 근사한 논문 제목과 링크를 제시했다. 출처로 써도 될까?','링크를 직접 열고 저자·제목·날짜를 확인합니다. 그 문서가 내 주장까지 뒷받침하는지 해당 부분을 읽습니다.']};let schoolCurrent='assignment';function schoolCase(k){schoolCurrent=k;$('#school-situation').textContent=schoolCases[k][0];$('#school-answer').textContent='';$$('[data-case]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.case===k));}$$('[data-case]').forEach(b=>b.onclick=()=>schoolCase(b.dataset.case));$('#school-reveal').onclick=()=>{$('#school-answer').textContent=schoolCases[schoolCurrent][1];};schoolCase('assignment');
+
+// Fit the classroom layout after fonts, images and interactive results change.
+// Small screens and enlarged browser text retain natural, accessible scrolling.
+const slideMedia=matchMedia('(min-width: 1100px) and (min-height: 650px)');
+let fitFrame=0;
+function fitSlides(){
+  fitFrame=0;
+  document.querySelectorAll('.slide-content').forEach(content=>{
+    content.style.zoom='1';
+    if(!slideMedia.matches)return;
+    const section=content.parentElement, style=getComputedStyle(section);
+    const available=window.innerHeight-parseFloat(style.paddingTop)-parseFloat(style.paddingBottom)-4;
+    // Keep at least 83% of the enlarged type; never clip unusually long user input.
+    const scale=Math.max(.83,Math.min(1,available/content.scrollHeight));
+    content.style.zoom=String(scale);
+  });
+}
+function queueSlideFit(){if(!fitFrame)fitFrame=requestAnimationFrame(fitSlides);}
+window.addEventListener('resize',queueSlideFit,{passive:true});
+document.addEventListener('fullscreenchange',queueSlideFit);
+document.fonts.ready.then(queueSlideFit);
+document.querySelectorAll('#main img').forEach(img=>img.addEventListener('load',queueSlideFit));
+new MutationObserver(queueSlideFit).observe($('#main'),{childList:true,subtree:true,characterData:true});
+$('#main').addEventListener('input',queueSlideFit);
+queueSlideFit();
