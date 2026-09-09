@@ -101,6 +101,13 @@ for(const photo of researchPhotos){
   const figure=`<figure class="research-photo"><a href="${photo.url}" target="_blank" rel="noopener noreferrer"><img src="assets/research/${photo.file}" alt="${photo.alt}" loading="lazy"></a><figcaption>${photo.caption} · <a href="${photo.url}" target="_blank" rel="noopener noreferrer">사진: ${photo.credit} ↗</a></figcaption></figure>`;
   slide.body=slide.body.replace('<div class="split"><div>','<div class="split"><div>'+figure);
 }
+const personHeading=(file,name,detail,credit,url,license='')=>`<figure class="person-heading"><img src="assets/people/${file}.jpg" alt="${name} 사진" width="112" height="112" loading="lazy"><figcaption><strong>${name}</strong><span>${detail}</span><a class="portrait-credit" href="${url}" target="_blank" rel="noopener noreferrer">사진: ${credit} ↗</a>${license?`<a class="portrait-credit" href="https://creativecommons.org/licenses/by/2.0/" target="_blank" rel="noopener noreferrer">CC BY 2.0 · 원본은 Commons에서 크롭</a>`:''}</figcaption></figure>`;
+const ngPortrait=personHeading('andrew-ng','Andrew Ng · 앤드루 응','전망 글 · 2026.02.20','Steve Jurvetson · 2017','https://commons.wikimedia.org/wiki/File:Andrew_Ng_WSJ_(2).jpg',true);
+const gatesPortrait=personHeading('bill-gates','Bill Gates · 빌 게이츠','전망 글 · 2026년','Christopher Smith / HHS · 2018 · Public domain','https://commons.wikimedia.org/wiki/File:Bill_Gates_2018.jpg');
+const turingPortrait=personHeading('alan-turing','Alan Turing · 앨런 튜링','기계의 지능을 질문하다','Elliott & Fry · 1951 · Public domain','https://commons.wikimedia.org/wiki/File:Alan_Turing_(1951).jpg');
+const futurePortraitSlide=sections.find(s=>s.id==='future');
+futurePortraitSlide.body=futurePortraitSlide.body.replace('<div class="eyebrow">ANDREW NG <span>2026.02.20</span></div>',ngPortrait).replace('<div class="eyebrow">BILL GATES <span>2026년 글 · 9월 7일 확인</span></div>',gatesPortrait);
+const turingSlide=sections.find(s=>s.id==='rules');turingSlide.body=turingSlide.body.replace('<div class="split"><div>','<div class="split"><div>'+turingPortrait);
 $('#main').innerHTML=sections.map((s,i)=>`<section id="${s.id}" class="${researchPhotos.some(p=>p.id===s.id)?'has-research-photo':''}"><div class="slide-content">${i?`<div class="eyebrow">${s.kicker}<span>${s.time}</span></div>`:''}${s.title?`<h2>${s.title}</h2>`:''}${s.body}</div><aside class="note"><strong>진행 노트 · ${s.time}</strong><br>${s.note}</aside></section>`).join('');
 let current=0;const go=n=>{current=Math.max(0,Math.min(sections.length-1,n));$('#'+sections[current].id).scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});};
 $('#prev').onclick=()=>go(current-1);$('#next').onclick=()=>go(current+1);
