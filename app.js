@@ -46,7 +46,8 @@ insertAfter('nextweek','horizon','04 / 정해지지 않은 다음','너의 경�
 // Split the same 100 minutes into smaller teaching beats.
 CNN.addSlides(insertAfter,split,lab);
 VisualExamples.addSlides(sections,insertAfter,split,lab);
-const timing={intro:2,opening:2,beginning:2,story:3,turning:3,choices:2,compass:4,everyday:2,rules:3,learning:4,xor:3,fit:3,data:2,winter:2,deep:2,'cnn-filter':3,'cnn-pooling':3,'cnn-flow':2,reinforcement:2,'alphago-search':2,reward:2,attention:4,diffusion:1,'diffusion-generation':2,generation:3,prompt:1,rag:2,agents:2,pause:5,future:4,jobs:3,scenarios:3,school:3,skills:3,portfolio:2,nextweek:3,horizon:1,closing:5};
+TransformerExamples.addSlides(sections,insertAfter,split,lab);
+const timing={intro:2,opening:2,beginning:2,story:3,turning:3,choices:2,compass:4,everyday:2,rules:3,learning:3,xor:3,fit:2,data:2,winter:2,deep:2,'cnn-filter':3,'cnn-pooling':3,'cnn-flow':2,reinforcement:2,'alphago-search':2,reward:2,'transformer-tokens':1,attention:2,'transformer-qkv':2,'transformer-mask':1,diffusion:1,'diffusion-generation':2,generation:3,prompt:1,rag:2,agents:2,pause:5,future:4,jobs:3,scenarios:3,school:3,skills:3,portfolio:2,nextweek:3,horizon:1,closing:5};
 let minute=0;sections.forEach(s=>{if(timing[s.id]){let n=timing[s.id];s.time=`${String(minute).padStart(2,'0')}–${String(minute+n).padStart(2,'0')}분 · ${n}분`;minute+=n;}});
 const revisedNotes={
 intro:'제목을 보여준 뒤 AI 사용 경험과 진로 걱정을 손들기로 물어보세요. 지역을 가능성의 한계로 규정하지 않도록 제목의 뜻을 설명합니다.',
@@ -165,3 +166,5 @@ queueSlideFit();
 CNN.init();
 
 VisualExamples.init();
+
+TransformerExamples.init();
